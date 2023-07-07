@@ -18,7 +18,7 @@ url_router.post("/short", async (req, res) => {
       }
 
       // if url is not found in DB
-      const short_url = process.env.base + "/" + url_id
+      const short_url = process.env.base + url_id
 
       url = new urlModel({
         original_url,
