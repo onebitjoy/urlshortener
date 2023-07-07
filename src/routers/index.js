@@ -5,11 +5,12 @@ const index_router = express.Router()
 
 index_router.get("/:url", async (req, res) => {
   try {
-
     const url = await urlModel.findOne({ url_id: req.params.url })
     if (url) {
-      const numclicks = url.number_of_clicks + 1
-      await urlModel.updateOne({ url_id: req.params.url_id, number_of_clicks: numclicks })
+      await urlModel.updateOne(
+        { url_id: url.url_id },
+        { $inc: { clicks: 1 } }
+      )
       return res.redirect(url.original_url)
     }
   } catch (error) {
