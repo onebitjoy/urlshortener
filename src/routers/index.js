@@ -8,12 +8,8 @@ index_router.get("/:url", async (req, res) => {
 
     const url = await urlModel.findOne({ url_id: req.params.url })
     if (url) {
-      await urlModel.updateOne({
-        url_id: req.params.url_id
-      },
-        {
-          $inc: { number_of_clicks: 1 }
-        })
+      const numclicks = url.number_of_clicks + 1
+      await urlModel.updateOne({ url_id: req.params.url_id, number_of_clicks: numclicks })
       return res.redirect(url.original_url)
     }
   } catch (error) {
